@@ -61,6 +61,8 @@ const getRepos = async function () {
 
 // DISPLAY INFO ABOUT REPOS
 const displayRepos = function (repos) {
+    // display the search box
+    filterInput.classList.remove("hide");
     // loop to create a list item for each repo
     for (let repo of repos) {
         const listItem = document.createElement("li");
@@ -123,13 +125,13 @@ const displayRepoInfo = function (repoInfo, languages) {
     repoData.append(newDiv);
     // unhide the "repo-data" section
     repoData.classList.remove("hide");
-    // hide the "repos" list
-    repoList.classList.add("hide");
-    // unhide the "back to repo gallery" button
+    // hide the "repos" section
+    repoSection.classList.add("hide");
+    // display the "back to repo gallery" button
     galleryReturn.classList.remove("hide");
 };
 
-// CLICK EVENT TO THE "BACK" BUTTON
+// CLICK EVENT FOR THE "BACK" BUTTON
 galleryReturn.addEventListener("click", function () {
     // display repo section
     repoSection.classList.remove("hide");
@@ -137,4 +139,31 @@ galleryReturn.addEventListener("click", function () {
     repoData.classList.add("hide");
     // hide the "back" button as well
     galleryReturn.classList.add("hide");
+});
+
+// INPUT EVENT FOR THE SEARCH BOX
+filterInput.addEventListener("input", function(e) {
+    // capture the value of the search text
+    const search = e.target.value;
+    console.log(search);
+    // select all elements with class "repo"
+    const repos = document.querySelectorAll(".repo");
+    // ensure the search text is all lowercase
+    const lowercaseSearch = search.toLowerCase();
+    console.log(lowercaseSearch);
+    // loop through each repo..
+    for (let repo of repos) {
+        console.log(repo.innerText);
+        // and get the lowercase of the repo name
+        let lowercaseRepo = repo.innerText;
+        // if the repo text includes the search text,
+        if (lowercaseRepo.includes(lowercaseSearch)) {
+            // show the repo
+            repo.classList.remove("hide");
+        }
+        else {
+            // otherwise, hide it
+            repo.classList.add("hide");
+        }
+    }
 });
