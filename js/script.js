@@ -9,6 +9,10 @@ const repoList = document.querySelector(".repo-list");
 const repoSection = document.querySelector(".repos");
 // select the section "repo-data", where the individual repo data appears
 const repoData = document.querySelector(".repo-data");
+// select the "back to repo gallery" button
+const galleryReturn = document.querySelector(".view-repos");
+// select the input with the "search by name" placeholder
+const filterInput = document.querySelector(".filter-repos");
 
 // FETCH API JSON DATA
 const getData = async function () {
@@ -80,7 +84,7 @@ repoList.addEventListener("click", function (e) {
 });
 
 // FUNCTION TO GET SPECIFIC REPO INFO
-const getRepoInfo = async function(repoName) {
+const getRepoInfo = async function (repoName) {
     // make a fetch request to grab information about the specific repo
     const response = await fetch(`https://api.github.com/repos/${username}/${repoName}`);
     // resolve and save the JSON response
@@ -121,4 +125,16 @@ const displayRepoInfo = function (repoInfo, languages) {
     repoData.classList.remove("hide");
     // hide the "repos" list
     repoList.classList.add("hide");
+    // unhide the "back to repo gallery" button
+    galleryReturn.classList.remove("hide");
 };
+
+// CLICK EVENT TO THE "BACK" BUTTON
+galleryReturn.addEventListener("click", function () {
+    // display repo section
+    repoSection.classList.remove("hide");
+    // hide individual repo data
+    repoData.classList.add("hide");
+    // hide the "back" button as well
+    galleryReturn.classList.add("hide");
+});
